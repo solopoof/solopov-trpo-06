@@ -1,0 +1,17 @@
+name: PHP checks
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+      - name: PHP syntax check
+        run: find src public tests -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Run project tests
+        run: php -d zend.assertions=1 -d assert.exception=1 tests/repository_test.php
