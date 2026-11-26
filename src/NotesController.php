@@ -8,7 +8,7 @@ final class NotesController {
    if($action==='add'){$this->notes->add((string)($_POST['title']??''));$message='Заметка добавлена.';}
    elseif($action==='toggle'){$this->notes->toggle((int)($_POST['id']??0));$message='Статус заметки изменён.';}
    elseif($action==='set_name'){$users=loadJsonArray($this->usersFile);$id=(int)($_POST['user_id']??0);$selected=null;foreach($users as $u)if((int)($u['id']??0)===$id){$selected=$u;break;}if($selected===null)throw new InvalidArgumentException('Выберите пользователя из users.json.');$_SESSION['display_name']=(string)$selected['name'];$message='Пользователь сессии изменён.';}
-   elseif($action==='clear'){$_SESSION=[];if(ini_get('session.use_cookies')){$p=session_get_cookie_params();setcookie(session_name(),' ',time()-42000,$p['path'],$p['domain'],$p['secure'],$p['httponly']);}session_regenerate_id(true);$_SESSION['display_name']='Гость';$message='Сессия сброшена.';}
+   elseif($action==='clear'){$_SESSION=[];if(ini_get('session.use_cookies')){$p=session_get_cookie_params();setcookie(session_name(),'',time()-42000,$p['path'],$p['domain'],$p['secure'],$p['httponly']);}session_regenerate_id(true);$_SESSION['display_name']='Гость';$message='Сессия сброшена.';}
    else throw new InvalidArgumentException('Неизвестное действие формы.');
   }catch(Throwable $x){$error=$x->getMessage();}
   $_SESSION['flash']=['message'=>$message,'error'=>$error];
