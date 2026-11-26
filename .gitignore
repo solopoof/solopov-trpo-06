@@ -1,5 +1,7 @@
-storage/*.tmp
 *.log
+*.lock
+*.tmp
 .DS_Store
 .vscode/
 .idea/
+.phpunit.cache/
